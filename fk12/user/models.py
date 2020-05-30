@@ -40,7 +40,7 @@ class Account(models.Model):
 
 
 	 def reference_check(self, *args, **kwargs):
-	 	references = Reference.objects.filter(reffered=self.id).count()
+	 	references = Reference.objects.filter(refered=self.id,referer.flagged=False).count()
 
 	 	if references > 5:
 	 		self.is_accepted = True 
