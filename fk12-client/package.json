@@ -1,0 +1,27 @@
+{
+  "name": "fk12_client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "cross-env NEXT_EXPORT=true next build && cross-env NEXT_EXPORT=true next export"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "next": "canary",
+    "next-offline": "4.0.6",
+    "popper.js": "^1.16.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-is": "^16.13.1",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "6.0.3"
+  }
+}
