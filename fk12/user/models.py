@@ -13,6 +13,8 @@ class Account(models.Model):
 	date_verfied = models.DateTimeField(null=True, blank=True)
 	last_active = models.DateTimeField(auto_now=True)
 	flagged = models.BooleanField(default=False)
+	date_locked = models.DateTimeField(null=True, blank=True)
+
 
 
 	def update_trust(self, *args, **kwargs):

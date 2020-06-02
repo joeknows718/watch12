@@ -4,7 +4,7 @@ from user.models import Account
 
 class Flag(models.Model):
 	title = models.Charfield(max_length=150)
-	account = models.ForeignKey(Account)
+	account = models.ForeignKey(Account, related_name='flags')
 	lat = models.DecimalField(max_digits=9, decimal_places=6)
 	lon = models.DecimalField(max_digits=9, decimal_places=6)
 	notes = models.Charfield(max_length=255)
@@ -21,12 +21,12 @@ class Flag(models.Model):
 		return self.title
 
 class Plus1(models.Model):
-		flagID = models.ForeignKey(Flag)
-		userID = models.ForeignKey(Account)
+		flagID = models.ForeignKey(Flag, related_name=pluses)
+		userID = models.ForeignKey(Account, related_name, related_name='plused')
 		date = models.DateTimeField(auto_now_add=True)
 
 class Comment(model.Model):
-	commenter = models.ForeignKey(Account)
+	commenter = models.ForeignKey(Account, related_name="commenter")
 	text = models.Charfield(max_length=255)
 	date = models.DateTimeField(auto_now_add=True)
 	flagID = model.ForeignKey(Flag)
@@ -35,5 +35,6 @@ class Comment(model.Model):
 		return "Comment for" + self.flagID.title
 
 class Img(models.Model):
-	flag =  model.ForeignKey(Flag)
+	flag =  models.ForeignKey(Flag related_name='imgs')
+	img = models.ImageField(upload_to='media/flags')
 	
