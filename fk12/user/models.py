@@ -16,7 +16,7 @@ class Account(models.Model):
 	date_locked = models.DateTimeField(null=True, blank=True)
 
 
-
+	@classmethod
 	def update_trust(self, *args, **kwargs):
 		flags = Flag.objects.filter(account=self.id).count()
 		pluses = Plus1.objects.filter(flagID.account=self.id).count()
@@ -32,26 +32,26 @@ class Account(models.Model):
 
 		super(Account, self).save(*args, **kwargs)
 
-	 
-	 def trust_check(self, *args, **kwargs):
-	 	trust = self.trust_score
-	 	if trust < .75:
-	 		self.flagged = True
+	@classmethod
+	def trust_check(self, *args, **kwargs):
+		trust = self.trust_score
+		if trust < .75:
+			self.flagged = True
 
-	 	super(Account, self).save(*args, **kwargs)
+		super(Account, self).save(*args, **kwargs)
 
+	@classmethod
+	def reference_check(self, *args, **kwargs):
+		references = Reference.objects.filter(refered=self.id,referer.flagged=False).count()
 
-	 def reference_check(self, *args, **kwargs):
-	 	references = Reference.objects.filter(refered=self.id,referer.flagged=False).count()
-
-	 	if references > 5:
-	 		self.is_accepted = True 
-	 		super(Account, self).save(*args, **kwargs)
-	 	else:
-	 		return False 
+		if references > 5:
+			self.is_accepted = True 
+			super(Account, self).save(*args, **kwargs)
+		else:
+			return False 
 
 	def __str__(self):
-        return self.user.username
+		return self.user.username
 
 
 class Reference(models.Model):

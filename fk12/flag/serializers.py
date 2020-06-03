@@ -14,7 +14,7 @@ class FlagSerializer(serializers.ModelSerializer):
 		imgs = serializers.RelatedField(many=True)
 	    class Meta:
        		model = Flag 
-       		fields = ('title', 'account', 'logitude', 'latitide', 'notes', 'preinct', 'badge_num', 'pluses', 'comments')
+       		fields = ('title', 'account', 'log', 'lat', 'notes', 'preinct', 'badge_num', 'pluses', 'comments')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class ImgSerializer(serializers.Serializer):
 		model = Img
 		fields = 'photo_url'
 
-	
+
 
 
 

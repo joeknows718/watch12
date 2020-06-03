@@ -38,3 +38,12 @@ class Img(models.Model):
 	flag =  models.ForeignKey(Flag related_name='imgs')
 	img = models.ImageField(upload_to='media/flags')
 	
+	def __str__(self):
+		return "Image for" + self.flagID.title
+
+class Dispute(models.Model):
+	account = models.ForeignKey(Account, related_name="dispute")
+	flag = models.ForeignKey(Flag related_name='disputes')
+	date = models.DateTimeField(auto_now_add=True)
+
+
