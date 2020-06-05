@@ -152,6 +152,9 @@ class DisputeView(APIView):
 			serializer.save()
 			flag = Flag.objects.filter(flagID=request.data['flag'])
 			flag.dispute_checks()
+			Account = Account.objects.filter(pk=request.data['flag_poster'])
+			Account.update_trust()
+			Account.trust_check()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
