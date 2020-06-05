@@ -14,6 +14,7 @@ class Account(models.Model):
 	last_active = models.DateTimeField(auto_now=True)
 	flagged = models.BooleanField(default=False)
 	date_locked = models.DateTimeField(null=True, blank=True)
+	trusted = models.BooleanField(default=False)
 
 
 	@classmethod
@@ -42,11 +43,18 @@ class Account(models.Model):
 
 	@classmethod
 	def reference_check(self, *args, **kwargs):
+
+		if trusted_referall = Reference.objects.filter(refered=self.id,referer.flagged=False, referer.trusted=True).count():
+			self.is_accepted = True 
+			super(Account, self).save(*args, **kwargs)
+
+		
 		references = Reference.objects.filter(refered=self.id,referer.flagged=False).count()
 
 		if references > 5:
 			self.is_accepted = True 
 			super(Account, self).save(*args, **kwargs)
+
 		else:
 			return False 
 

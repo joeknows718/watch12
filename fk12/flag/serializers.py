@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from user.serializers import AccountSerializer
-from models import Flag, Plus1, Comment 
+from models import Flag, Plus1, Comment , Img, Dispute 
 
 
 
@@ -9,9 +9,12 @@ from models import Flag, Plus1, Comment
 
 
 class FlagSerializer(serializers.ModelSerializer):
+
+
 		pluses = serializers.RelatedField(many=True)
 		comments = serializers.RelatedField(many=True)
 		imgs = serializers.RelatedField(many=True)
+		disputes = serializers.RelatedField(many=True)
 	    class Meta:
        		model = Flag 
        		fields = ('title', 'account', 'log', 'lat', 'notes', 'preinct', 'badge_num', 'pluses', 'comments')
@@ -34,7 +37,9 @@ class ImgSerializer(serializers.Serializer):
 		fields = 'photo_url'
 
 
-
+class DisputeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Dispute
 
 
 
