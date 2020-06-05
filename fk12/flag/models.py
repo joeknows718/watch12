@@ -15,6 +15,16 @@ class Flag(models.Model):
 	badge_num = models.PositiveSmallIntegerField(null=True, blank=True)
 	active = models.BooleanField(default=True)
 
+	@classmethod
+	def dispute_check(self, *args, **kwargs):
+		count = Dispute.objects.filter(flag=self.pk).count()
+		if count > 5:
+			self.disputed=True
+			super(Account, self).save(*args, **kwargs)
+		else:
+			return True 
+
+
 	#need fn to deactive old ones. 
 
 	def __str__(self):
@@ -45,5 +55,5 @@ class Dispute(models.Model):
 	account = models.ForeignKey(Account, related_name="dispute")
 	flag = models.ForeignKey(Flag related_name='disputes')
 	date = models.DateTimeField(auto_now_add=True)
-
+	text = models.Charfield(max_length=255)
 

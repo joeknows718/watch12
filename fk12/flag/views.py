@@ -15,7 +15,7 @@ from rest_framework import status
 class FlagView(APIView):
 	def get(self, request, format=None):
 		time_threshold = datetime.now() - timedelta(hours=12)
-		flags = Flag.objects.filter(date__lt=time_threshold) # need to filter by geographic radius 
+		flags = Flag.objects.filter(date__lt=time_threshold, disputed=False) # need to filter by geographic radius 
 		serializer = FlagSerializer(flags, many=True)
 		return Response(serializer.data)
 
@@ -76,6 +76,9 @@ class Plus1Views(APIView):
 		serializer = Plus1Serializer(data=request.data)
 		if serializer.is_valid():
 			serializer.save()
+			Account = Account.objects.filter(pk=request.data['flag_poster'])
+			Account.update_trust()
+			Account.trust_check()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -145,8 +148,10 @@ class DisputeView(APIView):
 	@permission_classes([IsAuthenticated])
 	def post(self, request, format=None):
 		serializer = DisputeSerializer(data=request.data)
-		if serializer.is_valid():
+		if serializer.is_valid()
 			serializer.save()
+			flag = Flag.objects.filter(flagID=request.data['flag'])
+			flag.dispute_checks()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
